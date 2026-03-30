@@ -23,9 +23,9 @@ Not sure which Mac you have? Click the Apple menu > "About This Mac". If it says
 ### Step 2: Run It
 
 1. Move the downloaded file to your **Desktop** or any folder you like.
-2. **Windows:** Double-click `MyHeadlines.exe` to run it.
-   **Mac:** Open Terminal, drag the file into the Terminal window, and press Enter. (First time: you may need to right-click > Open to bypass the security warning.)
-3. A black terminal window will appear with some startup messages. **Keep this window open** — this is MyHeadlines running. When you want to stop it, just close this window.
+2. **Windows:** Your browser may warn that the file "isn't commonly downloaded." This is normal for new open-source software — click **"Keep"** then **"Keep anyway"** to complete the download. Double-click `MyHeadlines.exe` to run it. If Windows SmartScreen shows a warning, click **"More info"** then **"Run anyway"**.
+   **Mac:** You may see a "cannot be opened because the developer cannot be verified" warning. Right-click the file and select **"Open"**, or go to **System Settings > Privacy & Security** and click **"Open Anyway"**. Alternatively, open Terminal, drag the file into the Terminal window, and press Enter.
+3. A terminal window will appear with some startup messages. **Keep this window open** — this is MyHeadlines running. When you want to stop it, just close this window.
 
 ### Step 3: Open the Dashboard
 
