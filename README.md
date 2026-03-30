@@ -1,6 +1,6 @@
 # MyHeadlines
 
-![version 1.0.0](https://img.shields.io/badge/version-1.0.0-blue) ![CI](https://github.com/df360-net/MyHeadlines/actions/workflows/ci.yml/badge.svg) ![license MIT](https://img.shields.io/badge/license-MIT-green)
+![version](https://img.shields.io/github/v/release/df360-net/MyHeadlines?label=version&color=blue) ![CI](https://github.com/df360-net/MyHeadlines/actions/workflows/ci.yml/badge.svg) ![license MIT](https://img.shields.io/badge/license-MIT-green)
 
 A personalized news agent that learns your interests and delivers a daily briefing. Download, run, done.
 
