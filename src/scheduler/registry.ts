@@ -159,34 +159,36 @@ export function getNextDailyRunTime(timeStr: string): Date {
   const [hours, minutes] = timeStr.split(":").map(Number);
   const tz = getUserTimezone();
 
-  // Get the current UTC offset for the user's timezone using Intl
+  // Get the current time parts in both UTC and user's timezone
   const now = new Date();
   const utcParts = getDatePartsInTz(now, "UTC");
   const localParts = getDatePartsInTz(now, tz);
 
-  // Build today's target in local timezone parts
-  const targetLocal = new Date(
+  // Use Date.UTC to build timestamps — avoids system timezone interference
+  const targetLocalMs = Date.UTC(
     localParts.year, localParts.month - 1, localParts.day,
     hours, minutes, 0, 0
   );
-  const nowLocal = new Date(
+  const nowLocalMs = Date.UTC(
     localParts.year, localParts.month - 1, localParts.day,
     localParts.hour, localParts.minute, localParts.second, 0
   );
 
-  // If target already passed today, move to tomorrow
-  if (targetLocal <= nowLocal) {
-    targetLocal.setDate(targetLocal.getDate() + 1);
+  // If target already passed today (in user's local time), move to tomorrow
+  let targetMs = targetLocalMs;
+  if (targetMs <= nowLocalMs) {
+    targetMs += 24 * 60 * 60 * 1000;
   }
 
-  // Calculate offset: difference between local-interpreted and UTC-interpreted "now"
-  const utcNow = new Date(
+  // Calculate user timezone offset from UTC (positive = east of UTC)
+  const utcNowMs = Date.UTC(
     utcParts.year, utcParts.month - 1, utcParts.day,
     utcParts.hour, utcParts.minute, utcParts.second, 0
   );
-  const offsetMs = nowLocal.getTime() - utcNow.getTime();
+  const offsetMs = nowLocalMs - utcNowMs;
 
-  return new Date(targetLocal.getTime() - offsetMs);
+  // Convert from user's local time to UTC
+  return new Date(targetMs - offsetMs);
 }
 
 /** Extract date parts in a given timezone using Intl.DateTimeFormat. */
