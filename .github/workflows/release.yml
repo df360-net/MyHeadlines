@@ -33,7 +33,8 @@ jobs:
 
       - name: Get version from tag
         id: version
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $env:GITHUB_OUTPUT
+        shell: bash
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
       - name: Compile Windows binary
         run: bun build --compile --define __BUILTIN_RESEND_KEY__="'${{ secrets.RESEND_API_KEY }}'" --define __BUILTIN_AWS_ACCESS_KEY_ID__="'${{ secrets.AWS_ACCESS_KEY_ID }}'" --define __BUILTIN_AWS_SECRET_ACCESS_KEY__="'${{ secrets.AWS_SECRET_ACCESS_KEY }}'" --define __BUILTIN_AWS_REGION__="'${{ secrets.AWS_REGION }}'" --define __APP_VERSION__="'${{ steps.version.outputs.VERSION }}'" src/main.ts --outfile MyHeadlines
