@@ -27,11 +27,16 @@ const awsKeyId = env.AWS_ACCESS_KEY_ID || "";
 const awsSecret = env.AWS_SECRET_ACCESS_KEY || "";
 const awsRegion = env.AWS_REGION || "us-east-1";
 
+// Read version from package.json
+const pkg = JSON.parse(readFileSync(join(ROOT, "package.json"), "utf-8"));
+const appVersion = pkg.version || "0.0.0";
+
 const defines = [
   `--define`, `__BUILTIN_RESEND_KEY__='${resendKey}'`,
   `--define`, `__BUILTIN_AWS_ACCESS_KEY_ID__='${awsKeyId}'`,
   `--define`, `__BUILTIN_AWS_SECRET_ACCESS_KEY__='${awsSecret}'`,
   `--define`, `__BUILTIN_AWS_REGION__='${awsRegion}'`,
+  `--define`, `__APP_VERSION__='${appVersion}'`,
 ];
 
 const targets = [

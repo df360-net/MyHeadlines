@@ -31,8 +31,12 @@ jobs:
       - name: Embed web assets
         run: bun scripts/embed-assets.ts
 
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $env:GITHUB_OUTPUT
+
       - name: Compile Windows binary
-        run: bun build --compile --define __BUILTIN_RESEND_KEY__="'${{ secrets.RESEND_API_KEY }}'" --define __BUILTIN_AWS_ACCESS_KEY_ID__="'${{ secrets.AWS_ACCESS_KEY_ID }}'" --define __BUILTIN_AWS_SECRET_ACCESS_KEY__="'${{ secrets.AWS_SECRET_ACCESS_KEY }}'" --define __BUILTIN_AWS_REGION__="'${{ secrets.AWS_REGION }}'" src/main.ts --outfile MyHeadlines
+        run: bun build --compile --define __BUILTIN_RESEND_KEY__="'${{ secrets.RESEND_API_KEY }}'" --define __BUILTIN_AWS_ACCESS_KEY_ID__="'${{ secrets.AWS_ACCESS_KEY_ID }}'" --define __BUILTIN_AWS_SECRET_ACCESS_KEY__="'${{ secrets.AWS_SECRET_ACCESS_KEY }}'" --define __BUILTIN_AWS_REGION__="'${{ secrets.AWS_REGION }}'" --define __APP_VERSION__="'${{ steps.version.outputs.VERSION }}'" src/main.ts --outfile MyHeadlines
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
@@ -62,11 +66,15 @@ jobs:
       - name: Embed web assets
         run: bun scripts/embed-assets.ts
 
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
       - name: Compile macOS ARM64 binary
-        run: bun build --compile --target=bun-darwin-arm64 --define __BUILTIN_RESEND_KEY__="'${{ secrets.RESEND_API_KEY }}'" --define __BUILTIN_AWS_ACCESS_KEY_ID__="'${{ secrets.AWS_ACCESS_KEY_ID }}'" --define __BUILTIN_AWS_SECRET_ACCESS_KEY__="'${{ secrets.AWS_SECRET_ACCESS_KEY }}'" --define __BUILTIN_AWS_REGION__="'${{ secrets.AWS_REGION }}'" src/main.ts --outfile MyHeadlines-mac-arm64
+        run: bun build --compile --target=bun-darwin-arm64 --define __BUILTIN_RESEND_KEY__="'${{ secrets.RESEND_API_KEY }}'" --define __BUILTIN_AWS_ACCESS_KEY_ID__="'${{ secrets.AWS_ACCESS_KEY_ID }}'" --define __BUILTIN_AWS_SECRET_ACCESS_KEY__="'${{ secrets.AWS_SECRET_ACCESS_KEY }}'" --define __BUILTIN_AWS_REGION__="'${{ secrets.AWS_REGION }}'" --define __APP_VERSION__="'${{ steps.version.outputs.VERSION }}'" src/main.ts --outfile MyHeadlines-mac-arm64
 
       - name: Compile macOS x64 binary
-        run: bun build --compile --target=bun-darwin-x64 --define __BUILTIN_RESEND_KEY__="'${{ secrets.RESEND_API_KEY }}'" --define __BUILTIN_AWS_ACCESS_KEY_ID__="'${{ secrets.AWS_ACCESS_KEY_ID }}'" --define __BUILTIN_AWS_SECRET_ACCESS_KEY__="'${{ secrets.AWS_SECRET_ACCESS_KEY }}'" --define __BUILTIN_AWS_REGION__="'${{ secrets.AWS_REGION }}'" src/main.ts --outfile MyHeadlines-mac-x64
+        run: bun build --compile --target=bun-darwin-x64 --define __BUILTIN_RESEND_KEY__="'${{ secrets.RESEND_API_KEY }}'" --define __BUILTIN_AWS_ACCESS_KEY_ID__="'${{ secrets.AWS_ACCESS_KEY_ID }}'" --define __BUILTIN_AWS_SECRET_ACCESS_KEY__="'${{ secrets.AWS_SECRET_ACCESS_KEY }}'" --define __BUILTIN_AWS_REGION__="'${{ secrets.AWS_REGION }}'" --define __APP_VERSION__="'${{ steps.version.outputs.VERSION }}'" src/main.ts --outfile MyHeadlines-mac-x64
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4

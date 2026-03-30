@@ -2,12 +2,29 @@ import { app } from "./server.js";
 import { runMigrations } from "./db/migrate.js";
 import { DATA_DIR, DB_PATH } from "./db/index.js";
 import { registerAllJobs, syncJobsToDb, startEngine, stopEngine } from "./scheduler/index.js";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 const PORT = Number(process.env.PORT || "3456");
 const HOST = "127.0.0.1";
 
+// Read version from package.json (works in both dev and compiled binary)
+let version = "unknown";
+try {
+  const pkg = JSON.parse(readFileSync(join(import.meta.dir, "..", "package.json"), "utf-8"));
+  version = pkg.version;
+} catch {
+  // Compiled binary — package.json not available, use compile-time define
+  version = typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0";
+}
+declare const __APP_VERSION__: string;
+
+const banner = `MyHeadlines v${version}`;
+const pad = Math.max(0, 38 - banner.length);
+const left = Math.floor(pad / 2);
+const right = pad - left;
 console.log("╔══════════════════════════════════════╗");
-console.log("║         MyHeadlines v1.0.0           ║");
+console.log(`║${" ".repeat(left)} ${banner} ${" ".repeat(right)}║`);
 console.log("╚══════════════════════════════════════╝");
 console.log();
 
