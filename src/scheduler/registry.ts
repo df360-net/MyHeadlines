@@ -93,15 +93,20 @@ export function syncJobsToDb() {
     const dailyRunTime = job.meta.defaultDailyRunTime || null;
 
     if (existing) {
-      // Update metadata only — preserve admin overrides
+      // Update metadata — preserve admin overrides for interval/enabled
+      // Always recalculate nextRunAt for daily jobs to pick up timezone fixes
+      const updates: Record<string, unknown> = {
+        name: job.meta.name,
+        description: job.meta.description,
+        groupCode: job.meta.groupCode,
+        dailyRunTime,
+        updatedAt: new Date(now),
+      };
+      if (dailyRunTime) {
+        updates.nextRunAt = getNextDailyRunTime(dailyRunTime);
+      }
       db.update(schedulerJobs)
-        .set({
-          name: job.meta.name,
-          description: job.meta.description,
-          groupCode: job.meta.groupCode,
-          dailyRunTime,
-          updatedAt: new Date(now),
-        })
+        .set(updates)
         .where(eq(schedulerJobs.code, code))
         .run();
     } else {
