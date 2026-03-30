@@ -1,0 +1,51 @@
+{
+  "name": "myheadlines",
+  "version": "1.0.0",
+  "description": "Personalized news agent — download, run, done. AI-powered daily briefing delivered to your inbox.",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/main.ts",
+    "dev:web": "cd web && npx vite",
+    "build:web": "cd web && npx vite build",
+    "build": "npm run build:web && tsc",
+    "build:bin": "npm run build:web && bun scripts/embed-assets.ts && bun scripts/compile.ts",
+    "start": "bun src/main.ts",
+    "test": "rm -rf node_modules/.vitest && bun --bun vitest run",
+    "test:watch": "bun --bun vitest --watch",
+    "lint": "cd web && npx eslint . && cd ..",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "headlines",
+    "news",
+    "agent",
+    "personalized"
+  ],
+  "author": "J & M Wei",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/df360-net/MyHeadlines.git"
+  },
+  "homepage": "https://github.com/df360-net/MyHeadlines#readme",
+  "bugs": {
+    "url": "https://github.com/df360-net/MyHeadlines/issues"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.1019.0",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.12.9",
+    "nanoid": "^5.1.7",
+    "resend": "^6.9.4",
+    "rss-parser": "^3.13.0",
+    "twilio": "^5.13.1"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.2"
+  }
+}

@@ -1,0 +1,39 @@
+node_modules/
+dist/
+.env
+.env.build
+*.db
+*.db-wal
+*.db-shm
+myheadlines-test.db*
+todo/
+
+# Web frontend
+web/node_modules/
+web/dist/
+web/web/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Compiled binaries
+MyHeadlines
+MyHeadlines.exe
+MyHeadlines-mac-*
+*.app/
+*.exe
+
+# Auto-generated embedded assets
+src/embedded-assets.ts
+
+# Bun cache
+.bun
+
+# Test files
+src/test-*.ts

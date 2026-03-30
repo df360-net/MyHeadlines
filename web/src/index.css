@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #F9FAFB;
+  --color-surface-card: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-border-light: #F0F0F0;
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-text-link: #1a73e8;
+  --color-skeleton: #F3F4F6;
+  --color-pill-active-bg: #E5E7EB;
+  --color-pill-hover-bg: #F9FAFB;
+  --color-pill-hover-border: #D1D5DB;
+  --color-separator: #D1D5DB;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Card entrance animation */
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hide scrollbar for filter tabs */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
