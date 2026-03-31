@@ -20,12 +20,13 @@ try {
 declare const __APP_VERSION__: string;
 
 const banner = `MyHeadlines v${version}`;
-const pad = Math.max(0, 38 - banner.length);
+const boxWidth = 38;
+const pad = Math.max(0, boxWidth - banner.length - 2); // -2 for spaces around banner
 const left = Math.floor(pad / 2);
 const right = pad - left;
-console.log("╔══════════════════════════════════════╗");
+console.log("╔" + "═".repeat(boxWidth) + "╗");
 console.log(`║${" ".repeat(left)} ${banner} ${" ".repeat(right)}║`);
-console.log("╚══════════════════════════════════════╝");
+console.log("╚" + "═".repeat(boxWidth) + "╝");
 console.log();
 
 // Step 1: Run database migrations

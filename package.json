@@ -1,6 +1,6 @@
 {
   "name": "myheadlines",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Personalized news agent — download, run, done. AI-powered daily briefing delivered to your inbox.",
   "type": "module",
   "scripts": {

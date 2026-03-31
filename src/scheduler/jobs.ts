@@ -13,6 +13,8 @@ import { sendBriefingEmail, sendEmailDigest } from "../services/delivery/email.j
 import { refreshProfile } from "../services/ai/profile-refresh.js";
 import type { JobMeta, JobFn } from "./types.js";
 
+const HEADLINE_RETENTION_DAYS = 4;
+
 // ── FETCH_ALL_NEWS (clustered) ───────────────────────────
 const fetchAllNewsMeta: JobMeta = {
   code: "FETCH_ALL_NEWS",
@@ -98,7 +100,7 @@ const recoverStalledExecute: JobFn = async (ctx) => {
 const cleanupMeta: JobMeta = {
   code: "CLEANUP_OLD_HEADLINES",
   name: "Cleanup Old Headlines",
-  description: "Remove headlines older than 30 days to keep the database lean.",
+  description: `Remove headlines older than ${HEADLINE_RETENTION_DAYS} days to keep the database lean.`,
   groupCode: "MAINTENANCE",
   defaultIntervalSeconds: 86400, // daily
   defaultTimeoutSeconds: 60,
@@ -106,8 +108,8 @@ const cleanupMeta: JobMeta = {
 };
 
 const cleanupExecute: JobFn = async (ctx) => {
-  ctx.log("INFO", "Cleaning up headlines older than 30 days");
-  cleanupOldHeadlines(30);
+  ctx.log("INFO", `Cleaning up headlines older than ${HEADLINE_RETENTION_DAYS} days`);
+  cleanupOldHeadlines(HEADLINE_RETENTION_DAYS);
   return {
     recordsProcessed: 0,
     outputMessage: "Old headlines cleaned up",
