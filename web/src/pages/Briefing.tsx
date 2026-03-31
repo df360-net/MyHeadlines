@@ -1,31 +1,13 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getBriefing, type BriefingCategory } from '../lib/api';
-import { RefreshCw, ExternalLink } from 'lucide-react';
-import { useState } from 'react';
+import { ExternalLink } from 'lucide-react';
 
 export function Briefing() {
-  const queryClient = useQueryClient();
-  const [refreshing, setRefreshing] = useState(false);
-  const [refreshError, setRefreshError] = useState<string | null>(null);
-
   const { data, isLoading, error } = useQuery({
     queryKey: ['briefing'],
     queryFn: () => getBriefing(),
     staleTime: 5 * 60 * 1000,
   });
-
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    setRefreshError(null);
-    try {
-      const fresh = await getBriefing(true);
-      queryClient.setQueryData(['briefing'], fresh);
-    } catch (err) {
-      setRefreshError((err as Error).message || "Failed to refresh briefing");
-    } finally {
-      setRefreshing(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -39,8 +21,18 @@ export function Briefing() {
   if (error) {
     return (
       <div className="text-center py-20">
-        <p className="text-[15px] text-red-500 mb-2">Failed to generate briefing</p>
+        <p className="text-[15px] text-red-500 mb-2">Failed to load briefing</p>
         <p className="text-[13px] text-[#9CA3AF]">{(error as Error).message}</p>
+      </div>
+    );
+  }
+
+  // No briefing cached yet (first day of use)
+  if (data?.empty) {
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-[22px] font-bold text-[#111827] mb-3">Today's Briefing</h2>
+        <p className="text-[16px] text-[#6B7280]">{data.message}</p>
       </div>
     );
   }
@@ -58,26 +50,10 @@ export function Briefing() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-[22px] font-bold text-[#111827]">Today's Briefing</h2>
-          <p className="text-[14px] text-[#9CA3AF] mt-0.5">{briefingDate}</p>
-        </div>
-        <button
-          onClick={handleRefresh}
-          disabled={refreshing}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-medium text-[#6B7280] hover:text-[#111827] hover:bg-[#F3F4F6] rounded-lg transition-all"
-        >
-          <RefreshCw size={14} className={refreshing ? 'animate-spin' : ''} />
-          {refreshing ? 'Refreshing...' : 'Refresh'}
-        </button>
+      <div className="mb-6">
+        <h2 className="text-[22px] font-bold text-[#111827]">Today's Briefing</h2>
+        <p className="text-[14px] text-[#9CA3AF] mt-0.5">{briefingDate}</p>
       </div>
-
-      {refreshError && (
-        <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg mb-4 text-sm text-red-700" role="alert">
-          Refresh failed: {refreshError}
-        </div>
-      )}
 
       {categories.length === 0 ? (
         <div className="text-center py-16">

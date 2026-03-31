@@ -94,7 +94,7 @@ export async function refreshHeadlines(extraHeadlines: RawHeadline[] = []): Prom
 /**
  * Clean up headlines older than the given number of days.
  */
-export function cleanupOldHeadlines(days: number = 30) {
+export function cleanupOldHeadlines(days: number = 4) {
   const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
 
   const result = db

@@ -69,8 +69,8 @@ export const sendDigestNow = () =>
   request('/digest/send', { method: 'POST' });
 
 // Briefing
-export const getBriefing = (refresh = false) =>
-  request<DailyBriefing>(`/briefing${refresh ? '?refresh=true' : ''}`);
+export const getBriefing = () =>
+  request<DailyBriefing>('/briefing');
 
 // Types
 export interface Headline {

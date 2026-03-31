@@ -38,6 +38,7 @@ Bun.serve({
   fetch: app.fetch,
   port: PORT,
   hostname: HOST,
+  idleTimeout: 40,
 });
 console.log(`[server] Running at http://${HOST}:${PORT}`);
 
