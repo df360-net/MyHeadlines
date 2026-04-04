@@ -47,13 +47,15 @@ describe("briefing cache", () => {
     expect(cached!.categories[0].category).toBe("Technology");
   });
 
-  it("returns null for stale (different day) briefing", () => {
+  it("returns previous day briefing (kept until replaced by new one)", () => {
     const yesterday: DailyBriefing = {
       ...sampleBriefing,
       date: "2020-01-01",
     };
     saveBriefing(yesterday);
-    expect(getCachedBriefing()).toBeNull();
+    const cached = getCachedBriefing();
+    expect(cached).not.toBeNull();
+    expect(cached!.date).toBe("2020-01-01");
   });
 
   it("overwrites previous briefing on re-save", () => {

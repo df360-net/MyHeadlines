@@ -24,14 +24,14 @@ Not sure which Mac you have? Click the Apple menu > "About This Mac". If it says
 
 1. Move the downloaded file to your **Desktop** or any folder you like.
 2. **Windows:** Your browser may warn that the file "isn't commonly downloaded." This is normal for new open-source software — click **"Keep"** then **"Keep anyway"** to complete the download. Double-click `MyHeadlines.exe` to run it. If Windows SmartScreen shows a warning, click **"More info"** then **"Run anyway"**.
-   **Mac:** Open Terminal and run these three commands (replace the filename if you downloaded the x64 version):
+3. **Mac:** Open Terminal and run these three commands (replace the filename if you downloaded the x64 version):
    ```
    xattr -cr ~/Downloads/MyHeadlines-mac-arm64
    chmod +x ~/Downloads/MyHeadlines-mac-arm64
    ~/Downloads/MyHeadlines-mac-arm64
    ```
    The first command removes the macOS quarantine flag (otherwise you'll get a "damaged" error). The second makes it executable. The third runs it.
-3. A terminal window will appear with some startup messages. **Keep this window open** — this is MyHeadlines running. When you want to stop it, just close this window.
+4. A terminal window will appear with some startup messages. **Keep this window open** — this is MyHeadlines running. When you want to stop it, just close this window.
 
 ### Step 3: Open the Dashboard
 

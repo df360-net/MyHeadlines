@@ -13,10 +13,7 @@ export function getCachedBriefing(): DailyBriefing | null {
   if (!row) return null;
 
   try {
-    const briefing = JSON.parse(row.value) as DailyBriefing;
-    const today = new Date().toISOString().slice(0, 10);
-    if (briefing.date === today) return briefing;
-    return null; // stale — different day
+    return JSON.parse(row.value) as DailyBriefing;
   } catch {
     return null;
   }
